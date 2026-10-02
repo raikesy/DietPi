@@ -10,20 +10,24 @@ function main
 	for ph in $placeholders
 		if not contains $ph $envNames
 			echo "$ph is not in the env file. Build cancelling."	
-			exit 1
+			return 1
 		end
 	end
 
 	for ev in $envNames
 		if not contains $ev $placeholders
 			echo "$ev does not have a placeholder in dietpi.txt. Build cancelling."
-			exit 1
+			return 1
 		end
 	end
 
 	umask 077
 	mkdir -p out
 	envsubst <dietpi.txt >out/dietpi.txt.out
+	or begin
+		rm out/dietpi.txt.out
+		return 1
+	end
 	mv out/dietpi.txt.out out/dietpi.txt
 end
 main
