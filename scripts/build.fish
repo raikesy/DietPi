@@ -24,8 +24,8 @@ function main
 
 	umask 077
 	mkdir -p out
-	envsubst <$dpFile >$baseDir/out/dietpi.txt
-
+	envsubst <$dpFile >$baseDir/out/dietpi.txt.out
+	mv $baseDir/out/dietpi.txt.out $baseDir/out/dietpi.txt
 end
 main
 
