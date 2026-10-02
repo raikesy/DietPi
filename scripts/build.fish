@@ -22,6 +22,7 @@ function main
 		end
 	end
 
+	umask 077
 	mkdir -p out
 	envsubst <$dpFile >$baseDir/out/dietpi.txt
 
