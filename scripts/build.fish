@@ -1,6 +1,5 @@
 #!/usr/bin/env fish
 function main
-	set prevDir $PWD
 	cd (status dirname)/..
 	source secrets.env.fish
 
@@ -11,14 +10,14 @@ function main
 	for ph in $placeholders
 		if not contains $ph $envNames
 			echo "$ph is not in the env file. Build cancelling."	
-			exit
+			exit 1
 		end
 	end
 
 	for ev in $envNames
 		if not contains $ev $placeholders
 			echo "$ev does not have a placeholder in dietpi.txt. Build cancelling."
-			exit
+			exit 1
 		end
 	end
 
@@ -26,7 +25,6 @@ function main
 	mkdir -p out
 	envsubst <dietpi.txt >out/dietpi.txt.out
 	mv out/dietpi.txt.out out/dietpi.txt
-	cd $prevDir
 end
 main
 
