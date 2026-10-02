@@ -1,11 +1,11 @@
 #!/usr/bin/env fish
 function main
-	set baseDir (status dirname)/..
-	set dpFile "$baseDir/dietpi.txt"
-	source $baseDir/secrets.env.fish
+	set prevDir $PWD
+	cd (status dirname)/..
+	source secrets.env.fish
 
 	# Check we have the right env variables in place
-	set placeholders (envsubst --variables "$(cat $dpFile)")
+	set placeholders (envsubst --variables "$(cat dietpi.txt)")
 	set envNames (set -lx --names)
 
 	for ph in $placeholders
@@ -24,8 +24,9 @@ function main
 
 	umask 077
 	mkdir -p out
-	envsubst <$dpFile >$baseDir/out/dietpi.txt.out
-	mv $baseDir/out/dietpi.txt.out $baseDir/out/dietpi.txt
+	envsubst <dietpi.txt >out/dietpi.txt.out
+	mv out/dietpi.txt.out out/dietpi.txt
+	cd $prevDir
 end
 main
 
