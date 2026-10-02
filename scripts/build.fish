@@ -22,6 +22,7 @@ function main
 		end
 	end
 
+	mkdir -p out
 	envsubst <$dpFile >$baseDir/out/dietpi.txt
 
 end
